@@ -1,0 +1,46 @@
+.login-form {
+  text-align: center;
+  background: #f5f5f5;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 350px; /* ความกว้าง */
+  height: 300px;
+  margin: 0 auto;
+  margin-top: 150px; /* ขยับลงมาข้างล่าง */
+}
+
+
+  .form-group {
+    margin: 10px 0;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  button {
+    background: linear-gradient(to right, #4b6cb7, #182848);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  
+  button:hover {
+    background: linear-gradient(to right, #5a7bcb, #253b69);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
