@@ -8,8 +8,8 @@ function App() {
   return (
 
     <React.Fragment>
-   <NavBar/>
-   {/* <Login/> */}
+   {/* <NavBar/> */}
+   <Login/>
    </React.Fragment>
   );
 }
