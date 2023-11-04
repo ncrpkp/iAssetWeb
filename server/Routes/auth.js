@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-router.get('/auth',(req,res)=>{
-    res.send('Hello auth Enpoint')
-})
+router.get("/auth", (req, res) => {
+  res.send("Hello auth Enpoint");
+});
 
-module.exports = router
+module.exports = router;
