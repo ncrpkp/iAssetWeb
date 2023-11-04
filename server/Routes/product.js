@@ -1,25 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-const { read } = require('../controllers/product')
+const { read, list, create, update, remove} = require('../controllers/product')
 
 
 
 //http://localhost:5000/api/product
-router.get('/product',(req,res)=>{
-    res.send('Hello product Enpoint')
-})
-router.get('/product/:id',(req,res)=>{
-    res.send('Hello 1 Product Enpoint')
-})
-router.post('/product',(req,res)=>{
-    res.send('Hello Post Enpoint')
-})
-router.put('/product/:id',(req,res)=>{
-    res.send('Hello Put Enpoint')
-})
-router.delete('/product/:id',(req, res)=>{
-    res.json({ name: 'tam', id:555 })
-})
+router.get('/product',list)
+router.get('/product/:id', read)
+router.post('/product', create)
+router.put('/product/:id',update)
+router.delete('/product/:id',remove)
 
 module.exports = router

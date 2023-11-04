@@ -4,7 +4,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 const bodyParse = require('body-parser')
 
-const { readdirSync } = require('fs');
+const connectDB = require('./Config/db')
+
+const { readdirSync } = require('fs')
 // const productRouters = require('./Routes/product')
 // const authRouters = require('./Routes/auth');
 // const app = express();
@@ -18,6 +20,8 @@ const { readdirSync } = require('fs');
 // app.listen(port, () => console.log(`listening on http://localhost:${port}`));
 
 const app = express();
+
+connectDB()
 
 app.use(morgan('dev'))
 app.use(cors())
