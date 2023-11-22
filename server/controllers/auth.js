@@ -1,32 +1,34 @@
-const User = require("../Models/Users");
-const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+const User = require('../Models/Users')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const { token } = require('morgan')
 
 exports.register = async (req, res) => {
-  try {
-    //1 check user
-    // console.log(req.body);
-    let { name, password } = req.body;
-    let user = await User.findOne({ name });
-    if (user) {
-      return res.send("User Already Exists!!!").status(400);
-    }
-    // 2 Encrypt
-    const salt = await bcrypt.genSalt(10);
-    user = new User({
-      name,
-      password,
-    });
-    user.password = await bcrypt.hash(password, salt);
-    //3 save
-    await user.save();
+    try {
+        //code
+        // 1.CheckUser
+        const { name, password } = req.body
+        var user = await User.findOne({ name })
+        if (user) {
+            return res.send('User Already Exists!!!').status(400)
+        }
+        // 2.Encrypt
+        const salt = await bcrypt.genSalt(10)
+        user = new User({
+            name,
+            password
+        })
+        user.password = await bcrypt.hash(password, salt)
+        // 3.Save
+        await user.save()
+        res.send('Register Success!!')
 
-    res.send("Register Success");
-  } catch (error) {
-    console.log(err);
-    res.status(500).send("Server Error");
-  }
-};
+    } catch (err) {
+        //code
+        console.log(err)
+        res.status(500).send('Server Error')
+    }
+}
 exports.login = async (req, res) => {
     try {
         //code
@@ -47,7 +49,7 @@ exports.login = async (req, res) => {
                 }
             }
             // 3. Generate
-            jwt.sign(payload, 'jwtsecret', { expiresIn: 20000 }, (err, token) => {
+            jwt.sign(payload, 'jwtsecret', { expiresIn: '1d' }, (err, token) => {
                 if (err) throw err;
                 res.json({ token, payload })
             })
@@ -60,4 +62,4 @@ exports.login = async (req, res) => {
         console.log(err)
         res.status(500).send('Server Error')
     }
-};
+}

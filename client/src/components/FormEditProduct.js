@@ -13,27 +13,42 @@ const FormEditProduct = () => {
         detail: '',
         price: ''
     })
+    const [fileold, setFileOld] = useState()
 
     useEffect(() => {
         loadData(params.id)
-    }, [params.id])
+    }, [])
 
     const loadData = async (id) => {
         read(id)
             .then((res) => {
                 setData(res.data)
+                setFileOld(res.data.file)
             })
     }
     const handleChange = (e) => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name === 'file') {
+            setData({
+                ...data,
+                [e.target.name]: e.target.files[0]
+            })
+        } else {
+            setData({
+                ...data,
+                [e.target.name]: e.target.value
+            })
+        }
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(data)
-        update(params.id, data)
+        console.log(fileold)
+        const formWithImageData = new FormData()
+        for (const key in data) {
+            formWithImageData.append(key, data[key])
+        }
+        formWithImageData.append('fileold', fileold)
+        update(params.id, formWithImageData)
             .then(res => {
                 console.log(res)
                 navigate('/')
@@ -42,8 +57,9 @@ const FormEditProduct = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div>FormEditProduct 555
+
+            <form onSubmit={handleSubmit} encType='multipart/form-data'>
                 <input
                     type='text'
                     name='name'
@@ -58,9 +74,12 @@ const FormEditProduct = () => {
                     value={data.detail}
                     onChange={e => handleChange(e)}
                 /><br />
-
+                <input type='file'
+                    name='file'
+                    onChange={e => handleChange(e)}
+                /><br />
                 <input
-                    type='number'
+                    type='text'
                     name='price'
                     placeholder='price'
                     value={data.price}
