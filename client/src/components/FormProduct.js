@@ -25,21 +25,38 @@ const FormProduct = () => {
             .then((res) => setData(res.data))
             .catch((err) => console.log(err))
     }
+
     const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        create(form)
-            .then(res => {
-                console.log(res.data)
-                loadData()
+        if (e.target.name === 'file') {   
+            setForm({
+                ...form,
+                [e.target.name]: e.target.files[0]
             })
-            .catch((err) => console.log(err))
+        }else{
+            setForm({
+                ...form,
+                [e.target.name]: e.target.value
+            })
+        }
     }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formWithImageData = new FormData();
+        for (const key in form) {
+          formWithImageData.append(key, form[key]);
+        }
+    
+        //console.log(formWithImageData)
+        create(formWithImageData)
+          .then((res) => {
+            console.log(res.data);
+            loadData();
+          })
+          .catch((err) => console.log(err));
+      };
+
+
     const handleRemove = async (id) => {
         remove(id)
             .then((res) => {
@@ -52,7 +69,7 @@ const FormProduct = () => {
         <div>
             {/* HTML */}
             FormProduct
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType='multipart/from-data'>
                 <input
                     type='text'
                     name='name'
@@ -70,6 +87,11 @@ const FormProduct = () => {
                     type='text'
                     name='price'
                     placeholder='price'
+                    onChange={e => handleChange(e)} />
+                <br />
+                <input
+                    type='file'
+                    name='file'
                     onChange={e => handleChange(e)} />
                 <br />
                 <button>Submit</button>
